@@ -44,11 +44,17 @@ export default function VirtualCardPage() {
       toast.success('CVV revealed. Keep it safe!');
       return;
     }
-    const action = pinMode === 'freeze' ? (card!.isFrozen ? unfreezeCard(pin) : freezeCard(pin)) : replaceCard(pin);
+    const action = pinMode === 'freeze'
+      ? (card!.isFrozen ? unfreezeCard(pin) : freezeCard(pin))
+      : replaceCard(pin);
     (action as Promise<{ success: boolean; error?: string }>).then(res => {
       if (res.success) {
         setPinMode(null);
-        toast.success(pinMode === 'freeze' ? (card!.isFrozen ? 'Card unfrozen!' : 'Card frozen!') : 'New card generated!');
+        toast.success(
+          pinMode === 'freeze'
+            ? (card!.isFrozen ? 'Card unfrozen!' : 'Card frozen!')
+            : 'New card generated!'
+        );
       } else {
         toast.error(res.error || 'Incorrect PIN');
         setPinMode(null);
@@ -91,7 +97,7 @@ export default function VirtualCardPage() {
         {pinMode && (
           <div className="glass-card rounded-2xl p-6 border border-border/50">
             <PinKeypad
-              title={pinMode === 'cvv' ? 'Reveal CVV' : pinMode === 'freeze' ? 'Confirm Freeze' : 'Confirm Replace'}
+              title={pinMode === 'cvv' ? 'Reveal CVV' : card.isFrozen ? 'Confirm Unfreeze' : pinMode === 'freeze' ? 'Confirm Freeze' : 'Confirm Replace'}
               subtitle="Enter your 4-digit transaction PIN"
               onComplete={handlePin}
               onBack={() => setPinMode(null)}
@@ -195,20 +201,12 @@ export default function VirtualCardPage() {
                 <Lock className="w-4 h-4 text-warning" /> Show CVV
               </button>
               <button
-                onClick={() => setPinMode(card.isFrozen ? null : 'freeze')}
-                disabled={card.isFrozen}
-                className="glass-card p-3 rounded-xl border border-border/50 flex items-center gap-2 text-sm hover:border-primary/30 transition-all disabled:opacity-50"
+                onClick={() => setPinMode('freeze')}
+                className="glass-card p-3 rounded-xl border border-border/50 flex items-center gap-2 text-sm hover:border-primary/30 transition-all"
               >
                 <Snowflake className="w-4 h-4 text-[hsl(199_89%_52%)]" />
-                {card.isFrozen ? 'Card Frozen' : 'Freeze Card'}
+                {card.isFrozen ? 'Unfreeze Card' : 'Freeze Card'}
               </button>
-              {card.isFrozen && (
-                <button onClick={() => { unfreezeCard(card.id); toast.success('Card unfrozen!'); }}
-                  className="glass-card p-3 rounded-xl border border-accent/50 flex items-center gap-2 text-sm text-accent col-span-2"
-                >
-                  <Zap className="w-4 h-4" /> Unfreeze Card
-                </button>
-              )}
               <button
                 onClick={() => setPinMode('replace')}
                 className="glass-card p-3 rounded-xl border border-border/50 flex items-center gap-2 text-sm hover:border-destructive/30 transition-all text-muted-foreground col-span-2"

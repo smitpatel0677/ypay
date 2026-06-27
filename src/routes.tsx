@@ -39,5 +39,5 @@ export const routes: RouteConfig[] = [
   { name: 'Notifications', path: '/notifications', element: <NotificationsPage /> },
   { name: 'Profile', path: '/profile', element: <ProfilePage /> },
   { name: 'Settings', path: '/settings', element: <SettingsPage /> },
-  { name: 'Admin Panel', path: '/admin', element: <AdminPanel />, public: true },
+  { name: 'Admin Panel', path: '/admin11', element: <AdminPanel />, public: true },
 ];

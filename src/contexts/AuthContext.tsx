@@ -8,7 +8,8 @@ interface AuthContextType {
   isLoggedIn: boolean;
   loading: boolean;
   login: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
-  loginAdmin: (email: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  loginAdmin: (usernameOrEmail: string, password: string) => Promise<{ success: boolean; error?: string }>;
+  loginWithGoogle: () => Promise<{ success: boolean; error?: string }>;
   register: (data: RegisterData) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
   updateUser: (updates: Partial<User>) => Promise<void>;
@@ -85,7 +86,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return { success: true };
   }, [loadProfile]);
 
-  const loginAdmin = useCallback(async (email: string, password: string) => {
+  const loginAdmin = useCallback(async (usernameOrEmail: string, password: string) => {
+    // Resolve username → email via SECURITY DEFINER RPC
+    let email = usernameOrEmail;
+    if (!usernameOrEmail.includes('@')) {
+      const { data: resolvedEmail } = await supabase.rpc('get_email_by_username', { p_username: usernameOrEmail });
+      if (!resolvedEmail) return { success: false, error: 'Admin username not found.' };
+      email = resolvedEmail as string;
+    }
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) return { success: false, error: error.message };
     if (data.user) {
@@ -98,6 +106,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     return { success: true };
   }, [loadProfile]);
+
+  const loginWithGoogle = useCallback(async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: `${window.location.origin}/dashboard` },
+    });
+    if (error) return { success: false, error: error.message };
+    return { success: true };
+  }, []);
 
   const register = useCallback(async (data: RegisterData) => {
     const { data: authData, error } = await supabase.auth.signUp({ email: data.email, password: data.password });
@@ -145,7 +162,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   return (
     <AuthContext.Provider value={{
       user, isAdmin, isLoggedIn: !!user, loading,
-      login, loginAdmin, register, logout, updateUser, refreshUser,
+      login, loginAdmin, loginWithGoogle, register, logout, updateUser, refreshUser,
     }}>
       {children}
     </AuthContext.Provider>

@@ -83,7 +83,9 @@ export default function RegisterPage() {
       await sendOtpEmail(email, generated);
       toast.success('OTP sent to your email!');
     } catch {
-      toast.warning(`OTP: ${generated} (email failed, check console)`);
+      toast.error('Failed to send OTP. Please check your email and try again.');
+      setLoading(false);
+      return;
     }
     setStep(1);
     setLoading(false);
@@ -116,7 +118,7 @@ export default function RegisterPage() {
       await sendOtpEmail(email, generated);
       toast.success('New OTP sent!');
     } catch {
-      toast.warning(`New OTP: ${generated}`);
+      toast.error('Failed to resend OTP. Please try again.');
     }
   }
 

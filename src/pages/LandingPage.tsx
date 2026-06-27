@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import {
   Shield, Zap, CreditCard, QrCode, PiggyBank, Globe, ChevronDown,
-  Star, CheckCircle, ArrowRight, Smartphone, Lock, TrendingUp,
+  CheckCircle, ArrowRight, Smartphone, Lock,
   Send, Bell, Users, BarChart3, MessageCircle, Twitter, Instagram, Linkedin,
   Wallet, Eye, EyeOff
 } from 'lucide-react';
@@ -17,19 +17,6 @@ const FEATURES = [
   { icon: Zap, title: 'Instant Settlements', desc: 'Real-time balance updates, 2-second polling, and atomic transactions — money is never lost.' },
 ];
 
-const STATS = [
-  { value: '2M+', label: 'Active Users' },
-  { value: '₹50Cr+', label: 'Transactions Daily' },
-  { value: '99.99%', label: 'Uptime' },
-  { value: '<1s', label: 'Avg. Transfer Time' },
-];
-
-const TESTIMONIALS = [
-  { name: 'Rohan Mehta', role: 'Freelancer', rating: 5, text: 'YourPay is the cleanest payment app I have ever used. The virtual card and QR features save me so much time.' },
-  { name: 'Divya Nair', role: 'Startup Founder', rating: 5, text: 'We use YourPay for all internal team payments. The savings wallet and reward system is a game-changer.' },
-  { name: 'Kiran Reddy', role: 'Student', rating: 5, text: 'Super fast UPI transfers and the security features give me complete peace of mind. Highly recommend!' },
-];
-
 const FAQS = [
   { q: 'Is YourPay free to use?', a: 'Yes! Creating a YourPay account and sending/receiving money is completely free. Premium features may have nominal charges.' },
   { q: 'How secure is my money?', a: 'YourPay uses bank-grade AES-256 encryption, prepared SQL statements, CSRF protection, transaction PIN verification, and full audit logging.' },
@@ -39,11 +26,7 @@ const FAQS = [
   { q: 'How do I get my UPI ID?', a: 'Your UPI ID (username@ypay) is automatically generated when you register. You can share it instantly for payments.' },
 ];
 
-const PRICING = [
-  { plan: 'Free', price: '₹0', period: '/month', color: 'border-border', badge: '', features: ['Main Wallet', 'Savings Wallet', 'Rewards Wallet', 'UPI Transfers', 'QR Payments', 'Virtual Card', '10 transactions/day'] },
-  { plan: 'Pro', price: '₹99', period: '/month', color: 'border-primary', badge: 'Most Popular', features: ['Everything in Free', 'Unlimited transactions', 'Priority support', 'Payment links', 'Scheduled payments', 'Advanced analytics', 'Early feature access'] },
-  { plan: 'Business', price: '₹499', period: '/month', color: 'border-accent', badge: '', features: ['Everything in Pro', 'Multi-user access', 'Bulk payments', 'Merchant tools', 'API access', 'Dedicated manager', 'Custom branding'] },
-];
+
 
 // Animated Phone Mockup
 function PhoneMockup() {
@@ -144,7 +127,6 @@ export default function LandingPage() {
         <div className="hidden md:flex items-center gap-6 text-sm text-muted-foreground">
           <a href="#features" className="hover:text-foreground transition-colors">Features</a>
           <a href="#security" className="hover:text-foreground transition-colors">Security</a>
-          <a href="#pricing" className="hover:text-foreground transition-colors">Pricing</a>
           <a href="#faq" className="hover:text-foreground transition-colors">FAQ</a>
         </div>
         <div className="flex items-center gap-2">
@@ -167,7 +149,7 @@ export default function LandingPage() {
           <div className="space-y-8">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-card text-xs text-muted-foreground border border-primary/20">
               <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-              Trusted by 2M+ users across India
+              Built by SRP Digital Studios
             </div>
             <h1 className="text-4xl md:text-6xl font-bold leading-tight text-balance">
               The Future of{' '}
@@ -201,18 +183,6 @@ export default function LandingPage() {
           <div className="flex justify-center md:justify-end">
             <PhoneMockup />
           </div>
-        </div>
-      </section>
-
-      {/* ─── Stats ─────────────────────────────────────────────── */}
-      <section className="py-16 border-y border-border/50">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-8">
-          {STATS.map(s => (
-            <div key={s.label} className="text-center">
-              <div className="text-3xl md:text-4xl font-bold gradient-text">{s.value}</div>
-              <div className="text-sm text-muted-foreground mt-1">{s.label}</div>
-            </div>
-          ))}
         </div>
       </section>
 
@@ -329,71 +299,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ─── Testimonials ─────────────────────────────────────────── */}
-      <section className="py-24 border-t border-border/50">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-balance">What our users <span className="gradient-text">say</span></h2>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {TESTIMONIALS.map(t => (
-              <div key={t.name} className="glass-card p-6 rounded-2xl h-full flex flex-col">
-                <div className="flex gap-1 mb-4">
-                  {Array.from({ length: t.rating }).map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-warning text-warning" />
-                  ))}
-                </div>
-                <p className="text-muted-foreground text-sm text-pretty leading-relaxed flex-1">"{t.text}"</p>
-                <div className="flex items-center gap-3 mt-4 pt-4 border-t border-border/50">
-                  <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-sm font-bold text-primary">{t.name[0]}</div>
-                  <div>
-                    <div className="text-sm font-semibold">{t.name}</div>
-                    <div className="text-xs text-muted-foreground">{t.role}</div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Pricing ─────────────────────────────────────────────── */}
-      <section id="pricing" className="py-24 border-t border-border/50">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold text-balance">Simple, <span className="gradient-text">transparent</span> pricing</h2>
-            <p className="text-muted-foreground text-lg mt-4">Start free. Upgrade when you need more.</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {PRICING.map(p => (
-              <div key={p.plan} className={`glass-card p-6 rounded-2xl border-2 ${p.color} relative h-full flex flex-col`}>
-                {p.badge && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground text-xs font-semibold px-3 py-1 rounded-full">{p.badge}</div>
-                )}
-                <div className="mb-6">
-                  <div className="text-lg font-semibold mb-2">{p.plan}</div>
-                  <div className="flex items-end gap-1">
-                    <span className="text-4xl font-bold">{p.price}</span>
-                    <span className="text-muted-foreground text-sm mb-1">{p.period}</span>
-                  </div>
-                </div>
-                <ul className="space-y-3 flex-1">
-                  {p.features.map(f => (
-                    <li key={f} className="flex items-center gap-2 text-sm">
-                      <CheckCircle className="w-4 h-4 text-accent shrink-0" />
-                      <span className="text-muted-foreground">{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <Link to="/register" className="mt-6 block">
-                  <Button className="w-full" variant={p.badge ? 'default' : 'outline'}>Get Started</Button>
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ─── FAQ ─────────────────────────────────────────────────── */}
       <section id="faq" className="py-24 border-t border-border/50">
         <div className="max-w-3xl mx-auto px-4 md:px-8">
@@ -425,7 +330,7 @@ export default function LandingPage() {
         <div className="relative max-w-4xl mx-auto px-4 md:px-8 text-center">
           <Smartphone className="w-12 h-12 text-primary mx-auto mb-6" />
           <h2 className="text-3xl md:text-5xl font-bold mb-4 text-balance">Ready to experience <span className="gradient-text">YourPay</span>?</h2>
-          <p className="text-muted-foreground text-lg mb-8 text-pretty max-w-xl mx-auto">Join millions of users who trust YourPay for fast, secure, and seamless digital payments.</p>
+          <p className="text-muted-foreground text-lg mb-8 text-pretty max-w-xl mx-auto">Start sending and receiving money instantly with your YourPay account.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link to="/register">
               <Button size="lg" className="glow-btn gap-2 text-base px-10 w-full sm:w-auto">
@@ -462,7 +367,7 @@ export default function LandingPage() {
               </div>
             </div>
             {[
-              { title: 'Product', links: ['Features', 'Virtual Cards', 'QR Payments', 'Savings', 'Pricing'] },
+              { title: 'Product', links: ['Features', 'Virtual Cards', 'QR Payments', 'Savings'] },
               { title: 'Company', links: ['About', 'Blog', 'Careers', 'Press', 'Contact'] },
               { title: 'Legal', links: ['Privacy Policy', 'Terms of Service', 'Security', 'Compliance', 'Cookies'] },
             ].map(col => (
